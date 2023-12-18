@@ -1,8 +1,17 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Playfair_Display } from 'next/font/google'
 import './globals.css'
+import CssBaseline from '@mui/material/CssBaseline';
+import StyleWrapper from '@/app-layouts/wrappers/style-wrapper';
+import WholeWrapper from '@/app-layouts/wrappers/whole-wrapper';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 
-const inter = Inter({ subsets: ['latin'] })
+
+const inter = Playfair_Display({
+  subsets: ['latin'],
+  // weight: ['100', '300', '400', '500', '700', '900'],
+  // weight: ['200', '300', '400', '500','600', '700']
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +25,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AppRouterCacheProvider>
+          <StyleWrapper>
+            <CssBaseline enableColorScheme />
+            <WholeWrapper>
+              {children}
+            </WholeWrapper>
+          </StyleWrapper>
+        </AppRouterCacheProvider>
+      </body>
     </html>
   )
 }
