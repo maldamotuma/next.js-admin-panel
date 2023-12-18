@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import StyleWrapper from '@/app-layouts/wrappers/style-wrapper';
 import WholeWrapper from '@/app-layouts/wrappers/whole-wrapper';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import ReduxWrapper from "@/redux/wrapper";
 
 
 const inter = Playfair_Display({
@@ -27,12 +28,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AppRouterCacheProvider>
-          <StyleWrapper>
-            <CssBaseline enableColorScheme />
-            <WholeWrapper>
-              {children}
-            </WholeWrapper>
-          </StyleWrapper>
+          <ReduxWrapper>
+            <StyleWrapper>
+              <CssBaseline enableColorScheme />
+              <WholeWrapper>
+                {children}
+              </WholeWrapper>
+            </StyleWrapper>
+          </ReduxWrapper>
         </AppRouterCacheProvider>
       </body>
     </html>
