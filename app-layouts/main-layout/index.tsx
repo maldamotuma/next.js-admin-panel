@@ -56,15 +56,15 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                     }}
                     onClose={toggleDrawer}
                 >
-                    <Box
-                        sx={{
+                    <Toolbar />
+                    <SimpleBar
+                        style={{
                             width: 240,
-                            height: "100vh",
+                            height: "calc(100vh - 65px)",
                         }}
                     >
-                        <Toolbar />
                         <Sidebar />
-                    </Box>
+                    </SimpleBar>
                 </Drawer>
             </Box>
             <Drawer open={isSmall ? open : false}
@@ -89,7 +89,11 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                     <Toolbar
                         sx={{
                             alignItems: "center",
-                            justifyContent: "space-between"
+                            justifyContent: "space-between",
+                            position: "sticky",
+                            top: 0,
+                            zIndex: 9,
+                            bgcolor: "background.default"
                         }}
                     >
                         <Link href="/">
