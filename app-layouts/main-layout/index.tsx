@@ -37,7 +37,14 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
         <>
             <HeaderNav toggleDrawer={toggleDrawer} open={open} />
             <Toolbar />
-            <Stack direction={"row"}>
+            <Box
+                sx={{
+                    display: {
+                        xs: "none",
+                        md: "flex"
+                    }
+                }}
+            >
                 <Drawer open={open}
                     variant={"persistent"}
                     sx={{
@@ -45,7 +52,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                             xs: "none",
                             md: "block"
                         },
-                        zIndex: 1
+                        zIndex: "1 !important"
                     }}
                     onClose={toggleDrawer}
                 >
@@ -59,73 +66,73 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                         <Sidebar />
                     </Box>
                 </Drawer>
-                <Drawer open={isSmall ? open : false}
-                    variant={"temporary"}
+            </Box>
+            <Drawer open={isSmall ? open : false}
+                variant={"temporary"}
+                sx={{
+                    display: {
+                        xs: "block",
+                        md: "none"
+                    }
+                }}
+                onClose={toggleDrawer}
+                ModalProps={{
+                    keepMounted: true, // Better open performance on mobile.
+                }}
+            >
+                <Box
                     sx={{
-                        display: {
-                            xs: "block",
-                            md: "none"
-                        }
-                    }}
-                    onClose={toggleDrawer}
-                    ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
+                        width: 240,
+                        height: "100vh",
                     }}
                 >
-                    <Box
-                        sx={{
-                            width: 240,
-                            height: "100vh",
-                        }}
-                    >
-                        <Toolbar
+                    <Toolbar
                         sx={{
                             alignItems: "center",
                             justifyContent: "space-between"
                         }}
-                        >
-                            <Link href="/">
-                                <Box
-                                    component={"img"}
-                                    alt="Logo"
-                                    src={"/logo.png"}
-                                    sx={{
-                                        height: 35,
-                                        m: 0,
-                                        p: 0
-                                    }}
-                                />
-                            </Link>
-                            <IconButton onClick={toggleDrawer}
+                    >
+                        <Link href="/">
+                            <Box
+                                component={"img"}
+                                alt="Logo"
+                                src={"/logo.png"}
                                 sx={{
-                                    bgcolor: "divider",
-                                    borderRadius: 1
+                                    height: 35,
+                                    m: 0,
+                                    p: 0
                                 }}
-                            >
-                                <FormatIndentDecreaseOutlined />
-                            </IconButton>
-                        </Toolbar>
-                        <Sidebar toggleDrawer={toggleDrawer} />
-                    </Box>
-                </Drawer>
-                <Box sx={{
-                    p: {
-                        xs: 0,
-                        sm: 1,
-                        md: 3
-                    },
-                    ml: {
-                        xs: 0,
-                        md: open ? "240px" : 0
-                    },
-                    transition: ".3s margin ease",
-                    flex: 1
-                }}>
-                    {
-                        children
-                    }
+                            />
+                        </Link>
+                        <IconButton onClick={toggleDrawer}
+                            sx={{
+                                bgcolor: "divider",
+                                borderRadius: 1
+                            }}
+                        >
+                            <FormatIndentDecreaseOutlined />
+                        </IconButton>
+                    </Toolbar>
+                    <Sidebar toggleDrawer={toggleDrawer} />
                 </Box>
-            </Stack>
+            </Drawer>
+            <Box sx={{
+                p: {
+                    xs: 0,
+                    sm: 1,
+                    md: 3
+                },
+                ml: {
+                    xs: 0,
+                    md: open ? "240px" : 0
+                },
+                transition: ".3s margin ease",
+                flex: 1
+            }}>
+                {
+                    children
+                }
+            </Box>
         </>
     );
 }

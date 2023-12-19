@@ -33,6 +33,11 @@ const links = [
                 title: "Add Car",
                 href: "/car/add",
                 icon: <DirectionsCarOutlined />
+            },
+            {
+                title: "Compare Car",
+                href: "/car/compare",
+                icon: <DirectionsCarOutlined />
             }
         ]
     },
