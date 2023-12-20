@@ -7,6 +7,8 @@ import WholeWrapper from '@/app-layouts/wrappers/whole-wrapper';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import ReduxWrapper from "@/redux/wrapper";
 import 'keen-slider/keen-slider.min.css'
+import 'simplebar-react/dist/simplebar.min.css';
+
 
 
 const inter = Playfair_Display({

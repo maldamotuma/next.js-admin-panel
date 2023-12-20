@@ -26,23 +26,10 @@ const CompareHeader = ({ car }: CompareHeaderProp) => {
                 }}
             />
             <CardHeader
-                title={car.car}
-                subheader={<>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Modi, suscipit consequuntur adipisci, sapiente qui temporibus fugiat porro commodi atque laudantium aperiam nam nemo ab distinctio eligendi dolorum, repellat nostrum nihil.</>}
-                subheaderTypographyProps={{
-                    sx: maxLine(2),
-                    fontSize: "14px",
-                    color: alpha("#ffffff", .75)
-                }}
+                title={<>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Modi, suscipit consequuntur adipisci, sapiente qui temporibus fugiat porro commodi atque laudantium aperiam nam nemo ab distinctio eligendi dolorum, repellat nostrum nihil.</>}
                 titleTypographyProps={{
                     sx: maxLine(2),
                     fontSize: "14px",
-                    color: "#ffffff"
-                }}
-                // action={<IconButton sx={{ color: "#ffffff" }}><Close /></IconButton>}
-                sx={{
-                    position: "absolute",
-                    bottom: 0,
-                    bgcolor: alpha("#000000", .85)
                 }}
             />
         </Card>

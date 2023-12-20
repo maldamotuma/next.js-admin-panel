@@ -1,11 +1,13 @@
 "use client";
 
-import { Paper, useScrollTrigger, Container, Typography, Box, IconButton, Slide } from "@mui/material";
+import { Paper, useScrollTrigger, Container, Typography, Box, IconButton, Slide, Stack } from "@mui/material";
 import { FunctionComponent } from "react";
 import { Car } from "@/types";
 import { maxLine } from "@/utils/typo";
 import {
-    Close
+    Close,
+    ArrowForwardOutlined,
+    ArrowBackOutlined
 } from "@mui/icons-material";
 import { blueGrey } from "@mui/material/colors";
 
@@ -23,7 +25,7 @@ const SlideHead: FunctionComponent<SlideHeadProps> = ({ cars }) => {
                 borderRadius: 0,
                 bgcolor: "transparent",
                 color: "#ffffff",
-                mb: 3,
+                mb: 1,
             }}
             elevation={0}
         >
@@ -34,37 +36,74 @@ const SlideHead: FunctionComponent<SlideHeadProps> = ({ cars }) => {
                         sx={{
                             minWidth: 300,
                             maxWidth: 400,
-                            borderLeft: i === 0 ? 0 : 1,
-                            width: "100%",
-                            borderColor: blueGrey[500],
-                            px: 2,
-
+                            width: "100%"
                         }}
                     >
                         <Box
                             sx={{
-                                bgcolor: blueGrey[900],
-                                p: 2,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                borderRadius: 2
+                                px: 2,
+                                borderLeft: i === 0 ? 0 : 1,
+                                borderColor: blueGrey[500]
                             }}
                         >
-                            <Typography
+                            <Box
                                 sx={{
-                                    ...maxLine(2)
+                                    bgcolor: blueGrey[900],
+                                    p: 2,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    borderRadius: 2
                                 }}
-                                fontWeight={700}
                             >
-                                {
-                                    cr.car
-                                }
-                            </Typography>
-                            <IconButton sx={{ color: "#ffffff" }}>
-                                <Close />
-                            </IconButton>
+                                <Typography
+                                    sx={{
+                                        ...maxLine(2)
+                                    }}
+                                    fontWeight={700}
+                                >
+                                    {
+                                        cr.car
+                                    }
+                                </Typography>
+                                <IconButton sx={{ color: "#ffffff" }}>
+                                    <Close />
+                                </IconButton>
+                            </Box>
                         </Box>
+                        <Stack
+                            direction={"row"}
+                            alignItems={"center"}
+                            justifyContent={"center"}
+                            gap={2}
+                            sx={{
+                                pt: .5,
+                                px: 3
+                            }}
+                        >
+                            <IconButton
+                                sx={{
+                                    bgcolor: "background.default",
+                                    "&:hover": {
+                                        bgcolor: "background.default",
+                                        boxShadow: 5
+                                    }
+                                }}
+                            >
+                                <ArrowBackOutlined />
+                            </IconButton>
+                            <IconButton
+                                sx={{
+                                    bgcolor: "background.default",
+                                    "&:hover": {
+                                        bgcolor: "background.default",
+                                        boxShadow: 5
+                                    }
+                                }}
+                            >
+                                <ArrowForwardOutlined />
+                            </IconButton>
+                        </Stack>
                     </Box>
                 ))
             }

@@ -2,13 +2,11 @@
 
 import CompareHeader from "@/components/cars/detail/headers";
 import { Box, Container, List, ListItem, ListItemIcon, ListItemText, Stack, alpha } from "@mui/material";
-import SimpleBar from "simplebar-react";
 import { Car } from "@/types"
 import { DoneAllOutlined } from "@mui/icons-material";
 import { blue, blueGrey } from "@mui/material/colors";
-import 'simplebar-react/dist/simplebar.min.css';
 import SlideHead from "@/components/cars/detail/SlideHead";
-import { UIEvent, useRef } from "react";
+import { MouseEvent, TouchEvent, UIEvent, useRef } from "react";
 
 
 const cars: Car[] = [
@@ -87,9 +85,42 @@ const features = [
 ]
 const Compare = () => {
     const ref = useRef<HTMLDivElement>();
-    const handleScroll = (e: UIEvent<HTMLDivElement>) => {
+    const axis = useRef<{
+        isDown: boolean;
+        startX: number;
+        scrollLeft: number;
+    }>({
+        isDown: false,
+        startX: -1,
+        scrollLeft: -1,
+    });
+    const boxRef = useRef<HTMLDivElement>();
+    const handleScroll = (e: TouchEvent<HTMLDivElement>) => {
         if (ref.current) ref.current.scrollLeft = e.currentTarget.scrollLeft;
     }
+
+    const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+        axis.current.isDown = true;
+        axis.current.startX = e.clientX - (boxRef.current?.offsetLeft || 0);
+        axis.current.scrollLeft = boxRef.current?.scrollLeft || -1;
+    }
+
+    const handleMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
+        axis.current.isDown = false;
+    }
+
+    const handleMouseUp = (e: MouseEvent<HTMLDivElement>) => {
+        axis.current.isDown = false;
+    }
+
+    const handleMouseMoove = (e: MouseEvent<HTMLDivElement>) => {
+        if (!axis.current.isDown) return false;
+        e.preventDefault();
+        const x = e.pageX - (boxRef.current?.offsetLeft || 0);
+        const walkX = (x - axis.current.startX) * 1;
+        if (boxRef.current) boxRef.current.scrollLeft = axis.current.scrollLeft - walkX;
+    }
+
     return (
         <>
             <Container maxWidth={"xl"}>
@@ -113,9 +144,17 @@ const Compare = () => {
                         width: "100%",
                         display: "block",
                         maxWidth: "xl",
-                        overflowX: 'auto',
+                        overflowX: {
+                            xs: "auto",
+                            md: "hidden"
+                        },
                     }}
                     onScroll={handleScroll}
+                    onMouseDown={handleMouseDown}
+                    ref={boxRef}
+                    onMouseLeave={handleMouseLeave}
+                    onMouseUp={handleMouseUp}
+                    onMouseMove={handleMouseMoove}
                 >
                     <Stack direction={"row"}>
                         {
@@ -126,7 +165,10 @@ const Compare = () => {
                                         px: 1,
                                         width: "100%",
                                         maxWidth: 400,
-                                        minWidth: 300
+                                        minWidth: 300,
+                                        "&:active": {
+                                            cursor: "grabbing"
+                                        }
                                     }}
                                 >
                                     <CompareHeader car={car} />
@@ -157,6 +199,9 @@ const Compare = () => {
                                         maxWidth: 400,
                                         "& .feture-list:nth-child(even)": {
                                             bgcolor: theme => alpha(theme.palette.divider, .05)
+                                        },
+                                        "&:active": {
+                                            cursor: "grabbing"
                                         }
                                     }}
                                     className="compare-column"
@@ -172,6 +217,11 @@ const Compare = () => {
                                                 </ListItemIcon>
                                                 <ListItemText
                                                     primary={feature}
+                                                    primaryTypographyProps={{
+                                                        sx: {
+                                                            cursor: "unset"
+                                                        }
+                                                    }}
                                                 />
                                             </ListItem>
                                         ))
